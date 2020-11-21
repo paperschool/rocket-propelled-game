@@ -4,6 +4,7 @@ import {
     REFRESH_DATA,
 } from "../constants";
 import Client from "./client";
+import Game from "../Game";
 
 type RoomSelfDestructCallbackFn = (roomId: string) => void;
 
@@ -12,6 +13,9 @@ export default class Room {
     private id: string;
     private admin: string;
     private clients: ClientCollection;
+    private game: Game;
+
+    private minimumClients: number = 2;
 
     private selfDestructCallbackFn: RoomSelfDestructCallbackFn;
     private selfDestructTimeout: NodeJS.Timeout;
@@ -22,6 +26,7 @@ export default class Room {
         this.selfDestructCallbackFn = selfDestructCallbackFn;
         this.clients = new ClientCollection()
         this.admin = adminDeviceId;
+        this.game = new Game();
 
         this.cleanUp();
     }
@@ -58,7 +63,9 @@ export default class Room {
     }
 
     cleanUp() {
-        if (this.clients.getClientCount() <= 0) {
+        if (this.clients.getClientCount() < this.minimumClients && this.game.started) {
+            this.scheduleSelfDestruct();
+        } else if (this.clients.getClientCount() == 0){
             this.scheduleSelfDestruct();
         } else {
             this.descheduleSelfDestruct()
@@ -70,14 +77,15 @@ export default class Room {
     }
 
     scheduleSelfDestruct() {
-        this.descheduleSelfDestruct()
+        this.descheduleSelfDestruct();
         this.selfDestructTimeout = setTimeout(() => {
+            this.getClients().detachAllClients();
             this.selfDestructCallbackFn(this.getId());
         }, this.getSelfDestructTTL());
     }
 
     createPayload() {
-        return { foo: "test payload" }
+        return { game: this.game.serialise() }
     }
 
     broadcast(emitKey: string, emitValue: any) {

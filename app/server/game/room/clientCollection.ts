@@ -47,6 +47,10 @@ export default class ClientCollection {
         }
     }
 
+    detachAllClients(){
+        this.getClients().forEach(client => this.detatchClient(client.getDeviceId()))
+    }
+
     clientExists(deviceId: string) {
         return this.getClientByDeviceId(deviceId) !== undefined;
     }
