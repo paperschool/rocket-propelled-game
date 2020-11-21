@@ -51,7 +51,6 @@ export const StoreProvider: FunctionComponent<StoreProviderProps> = ({
             id={id}
             displayName={displayName} /> : null}
         {children}
-        {children}
     </Store.Provider>);
 }
 

@@ -77,7 +77,7 @@ export default class Room {
     }
 
     createPayload() {
-        return {}
+        return { foo: "test payload" }
     }
 
     broadcast(emitKey: string, emitValue: any) {

@@ -6,7 +6,7 @@ import SmallHeader from "../../SmallHeader";
 import validateRoomCodeInput from "./validateRoomCodeInput";
 import validateRoomCodeRequest from "./validateRoomCodeRequest";
 
-import { setRoomCode } from "../../../state/GameStore/actions";
+import { setRoomCode, setRoomCodeValidity } from "../../../state/GameStore/actions";
 import { getDeviceId } from "../../../state/GameStore/selectors";
 import gameStore from "../../../state/GameStore/store";
 
@@ -20,16 +20,16 @@ const HomeJoinRoom: FunctionComponent = () => {
     const { state, dispatch } = useContext(gameStore);
 
     const [newRoomCode, setNewRoomCode] = useState("")
-    const [confirmEnabled, setConfirmEnabled] = useState(false)
+    const [joinEnabled, setJoinEnabled] = useState(false)
     const [validatingRoomCode, setValidatingRoomCode] = useState(false);
-    const [roomCodeValidity, setRoomCodeValidity] = useState(true);
+    const [roomCodeFormatValid, setRoomCodeFormatValid] = useState(true);
 
     useEffect(() => {
-        setRoomCodeValidity(true);
+        setRoomCodeFormatValid(true);
         if (validateRoomCodeInput(newRoomCode) && !validatingRoomCode) {
-            setConfirmEnabled(true);
+            setJoinEnabled(true);
         } else {
-            setConfirmEnabled(false);
+            setJoinEnabled(false);
         }
     }, [newRoomCode, validateRoomCodeInput])
 
@@ -43,7 +43,7 @@ const HomeJoinRoom: FunctionComponent = () => {
                 setNewRoomCode(input)
             }}
             placeholder={"ABCD-1234"}
-            type={roomCodeValidity ? InputTypes.Default : InputTypes.Invalid}
+            type={roomCodeFormatValid ? InputTypes.Default : InputTypes.Invalid}
         />
         <Button
             onClick={async () => {
@@ -51,16 +51,18 @@ const HomeJoinRoom: FunctionComponent = () => {
                 const serverValidatedRoomCode: any = await validateRoomCodeRequest(getDeviceId(state), newRoomCode);
                 if (serverValidatedRoomCode) {
                     setRoomCode(dispatch, serverValidatedRoomCode);
+                    setRoomCodeFormatValid(true);
+                    setRoomCodeValidity(dispatch, true);
                 } else {
-                    setRoomCodeValidity(false);
+                    setRoomCodeFormatValid(false);
                 }
                 setValidatingRoomCode(false);
             }}
-            enabled={confirmEnabled}
-            text={"Confirm"}
-            type={roomCodeValidity ? ButtonTypes.Default : ButtonTypes.Invalid}
+            enabled={joinEnabled}
+            text={"Join"}
+            type={roomCodeFormatValid ? ButtonTypes.Default : ButtonTypes.Invalid}
         />
-        {!roomCodeValidity && <p>Room Code Invalid...</p>}
+        {!roomCodeFormatValid && <p>Room Code Invalid...</p>}
     </div>)
 }
 

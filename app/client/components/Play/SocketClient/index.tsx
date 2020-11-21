@@ -25,14 +25,18 @@ const SocketClient: FunctionComponent = () => {
 
     const { state, dispatch } = useContext(gameStore);
 
-    const [readyToSetup, setReadyToSetup] = useState(false);
+    const [clientReadyToSetup, setClientReadyToSetup] = useState(false);
     const [socket, setSocket] = useState(undefined);
     const [isBadRoom, setIsBadRoom] = useState(undefined);
     const [refreshData, setRefreshData] = useState(undefined);
 
     useEffect(() => {
-        if (getDeviceId(state), getRoomCode(state)) {
-            setReadyToSetup(true);
+        if (getDeviceId(state)) {
+            if (getRoomCode(state)) {
+                setClientReadyToSetup(true);
+            } else {
+                setIsBadRoom(true);
+            }
         }
     }, [getDeviceId(state), getRoomCode(state)])
 
@@ -54,7 +58,7 @@ const SocketClient: FunctionComponent = () => {
             setSocketConnected(dispatch);
         })
 
-        // newSocket.on(REFRESH_DATA, (refreshData: any) => setRefreshData(refreshData))
+        newSocket.on(REFRESH_DATA, (refreshData: any) => setRefreshData(refreshData))
 
         // newSocket.on(SPAM_WARN_CLIENT, (error: any) => {
         //     console.log("Spam Warn Called");
@@ -66,7 +70,7 @@ const SocketClient: FunctionComponent = () => {
 
         setSocket(newSocket);
 
-    }, [readyToSetup])
+    }, [clientReadyToSetup])
 
     useEffect(() => {
         return () => {
@@ -87,13 +91,12 @@ const SocketClient: FunctionComponent = () => {
         }
     }, [isBadRoom])
 
-    // useEffect(() => {
-    //     if (refreshData) {
-    //         console.log(refreshData)
-    //         // storeData(dispatch, refreshData);
-    //     }
-    // }, [refreshData])
-
+    useEffect(() => {
+        if (refreshData) {
+            console.log(refreshData)
+            // storeData(dispatch, refreshData);
+        }
+    }, [refreshData])
 
     return (<></>)
 }

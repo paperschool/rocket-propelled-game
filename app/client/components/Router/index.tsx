@@ -18,16 +18,15 @@ const Router: FunctionComponent = () => {
                     <Route exact path='/' >
                         <Home />
                     </Route>
-                    {/* <Route exact path='/authorisation' >
-                        <Authorisation />
+                    <Route exact path='/play' >
+                        <Play />
                     </Route>
-                    <Route exact path='/about' >
-                        <About />
+                    {/* <Route exact path='/about' >
+                    <Error />
                     </Route>
                     <Route exact path='/faq' >
-                        <FAQ />
+                        <Error />
                     </Route>*/}
-                    <Route exact path='/play' component={Play} />
                     <Route>
                         <Error />
                     </Route>

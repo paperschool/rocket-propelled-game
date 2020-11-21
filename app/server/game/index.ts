@@ -31,12 +31,14 @@ const SocketInterface = async (httpServer: any) => {
 
     io.on('connection', client => {
 
+        // event handler for when client sends initial handshake message
         on(client, CONNECT_CLIENT, true, ({ deviceId, roomCode }: Message) => {
             const rooms = state.getRooms();
 
             rooms.addClient(deviceId, roomCode, client)
         })
 
+        // event handler for when client sends disconnect message
         on(client, DISCONNECT_CLIENT, true, ({ deviceId, roomCode }: Message) => {
             const rooms = state.getRooms();
             const room = rooms.getRoomById(roomCode);
@@ -44,14 +46,6 @@ const SocketInterface = async (httpServer: any) => {
                 room.detatchClient(deviceId)
             }
         })
-
-        // client.on(CONNECT_CLIENT, ({ roomId, deviceId }) => {
-
-        //     const rooms = state.getRooms();
-
-        //     rooms.addClient(roomId, deviceId, client)
-        // });
-
 
     });
 

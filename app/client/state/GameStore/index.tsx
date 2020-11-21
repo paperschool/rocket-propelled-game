@@ -23,6 +23,7 @@ export const GameStoreProvider: FunctionComponent = ({ children }) => {
             reducer={reducer}
             initialState={initialStateResolved}
             store={store}
+            idleTracking={true}
         >
             {children}
         </StoreProvider>
