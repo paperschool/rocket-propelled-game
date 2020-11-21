@@ -1,1 +1,1 @@
-export default (): string => "GGOB | Choo Choo Choo";
+export default (): string => "RPG | Moonshot";
