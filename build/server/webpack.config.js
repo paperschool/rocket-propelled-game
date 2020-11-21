@@ -21,6 +21,6 @@ module.exports = (env, { mode }) => {
             filename: 'server.bundle.js',
             path: path.resolve(__dirname, '../../bin/server'),
         },
-        // watch: !isProduction
+        watch: !isProduction
     }
 };
