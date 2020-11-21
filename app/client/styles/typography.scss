@@ -1,0 +1,87 @@
+@import "./colours.scss";
+
+@font-face {
+    font-family: 'montserrat-bold';
+    src: url('../../assets/montserrat_bold.woff2') format('woff2'),
+         url('../../assets/montserrat_bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'montserrat-light';
+    src: url('../../assets/montserrat_light.woff2') format('woff2'),
+         url('../../assets/montserrat_light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1,h2,h3,h4,h5,h6,p,a {
+    color: white;
+}
+
+h1 {
+    font-size: 40px;
+    font-family: 'montserrat-bold', sans-serif;
+
+    &[class*="logo"] {
+        letter-spacing: 14px;
+    }
+}
+
+
+h2 {
+    font-size: 32px;
+    font-family: 'montserrat-bold', sans-serif;
+
+    &[class*="logo"] {
+        letter-spacing: 12px;
+    }
+}
+
+
+h3 {
+    font-size: 24px;
+    font-family: 'montserrat-bold', sans-serif;
+    line-height: 20px;
+}
+
+h4 {
+    font-size: 20px;
+    font-family: 'montserrat-bold', sans-serif;
+}
+
+h5,h6 {
+    font-size: 16px;
+    font-family: 'montserrat-bold', sans-serif;
+}
+
+p {
+    font-family: 'montserrat-light', sans-serif;
+    font-size: 16px;
+}
+
+p[class*="bold"] {
+    font-family: 'montserrat-bold', sans-serif;
+    font-size: 16px;
+}
+
+a {
+    color: $green;
+    font-weight: bold;
+
+    &:link, &:visited, &:hover, &:active {
+        text-decoration: none;
+    }
+}
+
+ul {
+    margin-left: 20px;
+}
+
+li {
+    font-family: 'montserrat-light', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    list-style: square;
+}

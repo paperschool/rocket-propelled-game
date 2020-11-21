@@ -1,0 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+    - docker pull node:12-slim
+
+script:
+  - sh ./deploy_dockerhub.sh

@@ -1,0 +1,11 @@
+@import "./colours.scss", "./typography.scss", "./inputs.scss", "./scroll.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+span {
+    display: inline;
+}

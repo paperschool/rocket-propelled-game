@@ -1,0 +1,1 @@
+export default (): string => "GGOB | Choo Choo Choo";

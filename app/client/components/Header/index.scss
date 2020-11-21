@@ -1,0 +1,32 @@
+@import "../../styles/colours.scss", "../../styles/dimensions.scss";
+
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: $headerHeight;
+    flex-shrink: 0;
+}
+
+.header {
+    width: 100%;
+    height: $headerHeight;
+    flex-shrink: 0;
+
+    & > h1 {
+        color:$white;
+        
+        @media (max-width: $breakpoint-tablet) {
+            font-size: 25px;
+        }
+    }
+
+    & > p {        
+
+        color:$lagoon;
+        @media (max-width: $breakpoint-tablet) {
+            font-size: 15px;
+        }
+    }
+}

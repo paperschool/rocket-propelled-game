@@ -1,0 +1,23 @@
+
+$headerHeight: 70px;
+$footerHeight: 20px;
+
+$searchHeaderHeight: 100px;
+$trackWidth: 300px;
+$smallHeaderHeight: 40px;
+$playerControllerHeight: 100px;
+
+$breakpoint-mobile-small: 320px;
+$breakpoint-mobile-medum: 375px;
+$breakpoint-mobile-large: 425px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop-small: 1024;
+$breakpoint-desktop-large: 1440;
+
+// layers
+$canvasLayer:-10;
+$appLayer:0;
+$notificationLayer:10;
+
+$loadingFowardLayer: 12;
+$loadingBackwardLayer: 11;

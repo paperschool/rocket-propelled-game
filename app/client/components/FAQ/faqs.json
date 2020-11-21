@@ -1,0 +1,34 @@
+[
+    {
+        "question": "What does Spotifriends do?",
+        "answer": "Spotifriends allows people to create a shared music space, invite friends into that space and listen to a playlist of tracks synchronised across all their devices."
+    },
+    {
+        "question": "Can I use this app if I don't have Spotify Premium?",
+        "answer": "No, unfortunately certain features of spotify are limited only to Premium users therefore this app is subject to those same limitations."
+    },
+    {
+        "question": "Can I use this app across many devices only using one account?",
+        "answer": "This is largely blocked by spotify therefore this app works intentionally to block it too, allowing only one user to use one instance of this app. ( even multiple tabs on the same machine )"
+    },
+    {
+        "question": "Is this app supported on any device with a web browser?",
+        "answer": "Currently the spotify technologies the app relies on do not support all browsers and devices, currently only Chrome and Firefox are strongly supported."
+    },
+    {
+        "question": "Can I control this app from spotify?",
+        "answer": "Currently this is in development but at the moment is largely blocked and if attempted will kick you to this page for clarification."
+    },
+    {
+        "question": "Why was I redirected to this page?",
+        "answer": "This could have happened for a myriad of reasons but most likely because you tried to control spotifriends from a spotify app."
+    },
+    {
+        "question": "What's up with the volume?",
+        "answer": "For reasons I haven't figured out yet, the volume is inconsistent across tracks, will hopefully fix soon."
+    },
+    {
+        "question": "Why build Spotifriends",
+        "answer": "Due to the COVID-19 lockdown, I felt the need more and more to listen to music with friends, so I tried to solve that issue!"
+    }
+]

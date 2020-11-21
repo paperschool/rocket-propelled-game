@@ -1,0 +1,10 @@
+@import "../../styles/dimensions.scss";
+
+.smallHeader {
+    width: 100%;
+    height: $smallHeaderHeight;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
