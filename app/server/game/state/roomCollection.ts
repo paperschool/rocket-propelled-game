@@ -115,13 +115,14 @@ export default class RoomCollection {
     }
 
     generateUniqueRoomCode() {
-        let unique = false;
+        let unique = false, candidateRoomCode;
 
         while (!unique) {
-            const candidateRoomCode = this.generateRoomCode();
+            candidateRoomCode = this.generateRoomCode();
             unique = !this.roomExists(candidateRoomCode)
-            return candidateRoomCode;
         }
+
+        return candidateRoomCode;
     }
 
 }
