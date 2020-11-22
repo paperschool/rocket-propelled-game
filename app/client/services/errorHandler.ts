@@ -1,31 +1,25 @@
-import environmentProvider from "../environmentProvider";
+import environmentProvider from '../environmentProvider';
 
-import {
-    NotFoundError,
-    ServerError,
-    TimeoutError,
-    UnauthorisedError
-} from "./errors";
+import { NotFoundError, ServerError, TimeoutError, UnauthorisedError } from './errors';
 
-type AdditionalErrorHandling = (response: any) => Promise<boolean>
+type AdditionalErrorHandling = (response: any) => Promise<boolean>;
 
 const errorHandler = async (request: Promise<any>, additionalErrorHandling?: AdditionalErrorHandling): Promise<any> => {
-
-    const {
-        CLIENT_REQUEST_TIMEOUT
-    } = environmentProvider()
+    const { CLIENT_REQUEST_TIMEOUT } = environmentProvider();
 
     const response: any = await Promise.race([
-        new Promise((res, rej) => setTimeout(() => {
-            res({ status: -1, timeout: true })
-        }, CLIENT_REQUEST_TIMEOUT)),
-        request
+        new Promise((res) =>
+            setTimeout(() => {
+                res({ status: -1, timeout: true });
+            }, CLIENT_REQUEST_TIMEOUT)
+        ),
+        request,
     ]);
 
     let additionalErrorHandlingResult;
 
     if (additionalErrorHandling) {
-        additionalErrorHandlingResult = await additionalErrorHandling(response)
+        additionalErrorHandlingResult = await additionalErrorHandling(response);
     }
 
     if (additionalErrorHandling && additionalErrorHandlingResult) {
@@ -43,10 +37,8 @@ const errorHandler = async (request: Promise<any>, additionalErrorHandling?: Add
     } else if (response.timeout) {
         throw new TimeoutError();
     } else {
-        throw new Error("Undefined Error Classification...");
+        throw new Error('Undefined Error Classification...');
     }
-
-
-}
+};
 
 export default errorHandler;

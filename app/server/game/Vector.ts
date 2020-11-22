@@ -1,10 +1,8 @@
-
 class Vector {
+    x = 0;
+    y = 0;
 
-    x: number = 0;
-    y: number = 0;
-
-    constructor(x: number = 0, y: number = 0){
+    constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
     }
@@ -12,8 +10,8 @@ class Vector {
     serialise() {
         return {
             x: this.x,
-            y: this.y
-        }
+            y: this.y,
+        };
     }
 }
 

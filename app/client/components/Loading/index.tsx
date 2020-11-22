@@ -1,33 +1,40 @@
-import React, { FunctionComponent } from "react";
-import classnames from "classnames";
+import React, { FunctionComponent } from 'react';
+import classnames from 'classnames';
 
-import { loading, loaderSmall, loaderLarge } from "./index.scss";
+import { loading, loaderSmall, loaderLarge } from './index.scss';
 
 export enum LoadingTypes {
     Small,
-    Large
+    Large,
 }
 
 type LoadingProps = {
-    loaded: Boolean,
-    size?: LoadingTypes
+    loaded: boolean;
+    size?: LoadingTypes;
 };
 
 export const Loading: FunctionComponent<LoadingProps> = ({ children, loaded, size = LoadingTypes.Large }) => {
-    return (<>
-        {loaded
-            ? children
-            : <div className={classnames(loading)}>
-                <div className={classnames(
-                    {
-                        [loaderSmall]: (size === LoadingTypes.Small),
-                        [loaderLarge]: (size === LoadingTypes.Large)
-                    })} >
-                    <div></div><div></div><div></div><div></div>
+    return (
+        <>
+            {loaded ? (
+                children
+            ) : (
+                <div className={classnames(loading)}>
+                    <div
+                        className={classnames({
+                            [loaderSmall]: size === LoadingTypes.Small,
+                            [loaderLarge]: size === LoadingTypes.Large,
+                        })}
+                    >
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
-            </div>
-        }
-    </>);
-}
+            )}
+        </>
+    );
+};
 
 export default Loading;

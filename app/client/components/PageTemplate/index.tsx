@@ -1,19 +1,19 @@
-import React, { FunctionComponent } from "react";
-import Header from "../Header";
-import Footer from "../Footer";
+import React, { FunctionComponent } from 'react';
+import Header from '../Header';
+import Footer from '../Footer';
 
-import { pageTemplate, appContainer, childrenContainer } from "./index.scss";
+import { pageTemplate, appContainer } from './index.scss';
 
-const PageTemplate: FunctionComponent = ({
-    children
-}) => {
-    return (<div className={pageTemplate}>
-        <div className={appContainer}>
-            <Header />
-            {children}
-            <Footer />
+const PageTemplate: FunctionComponent = ({ children }) => {
+    return (
+        <div className={pageTemplate}>
+            <div className={appContainer}>
+                <Header />
+                {children}
+                <Footer />
+            </div>
         </div>
-    </div>)
-}
+    );
+};
 
-export default PageTemplate
+export default PageTemplate;

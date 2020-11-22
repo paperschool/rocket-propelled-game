@@ -1,8 +1,8 @@
-import RoomCollection from "./RoomCollection";
+import RoomCollection from './RoomCollection';
 
 class State {
     private rooms: RoomCollection;
-    private modificationCoolDown: number = 1000;
+    private modificationCoolDown = 1000;
 
     constructor() {
         this.rooms = new RoomCollection();

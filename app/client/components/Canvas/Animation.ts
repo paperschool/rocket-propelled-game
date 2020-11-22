@@ -1,9 +1,8 @@
-import { randomInt, random } from "./Utility";
+import { randomInt } from './Utility';
 
 export class Animation {
-
-    private size: Vector
-    private pos: Vector
+    private size: Vector;
+    private pos: Vector;
     private sneakers: Sneakers;
 
     constructor() {
@@ -12,14 +11,11 @@ export class Animation {
     }
 
     getCanvasSize() {
-        return new Vector(
-            window.innerWidth - 20,
-            window.innerHeight - 20,
-        )
+        return new Vector(window.innerWidth - 20, window.innerHeight - 20);
     }
 
     resize(p5: any) {
-        const { x, y } = this.getCanvasSize()
+        const { x, y } = this.getCanvasSize();
         this.size = this.getCanvasSize();
 
         this.sneakers.setSize(this.size);
@@ -28,7 +24,7 @@ export class Animation {
     }
 
     setup(p5: any, canvasParentRef: any) {
-        const { x, y } = this.getCanvasSize()
+        const { x, y } = this.getCanvasSize();
         p5.createCanvas(x, y).parent(canvasParentRef);
     }
 
@@ -37,19 +33,15 @@ export class Animation {
         this.sneakers.update();
         this.sneakers.draw(p5);
     }
-
 }
 
 class Sneakers {
-
     private size: Vector;
-    private sneakers: Sneaker[]
+    private sneakers: Sneaker[];
 
     constructor(size: Vector, count: number) {
         this.setSize(size);
-        this.sneakers = new Array(count).fill(0).map(() =>
-            new Sneaker(this.randomPoint())
-        );
+        this.sneakers = new Array(count).fill(0).map(() => new Sneaker(this.randomPoint()));
     }
 
     getSize() {
@@ -61,10 +53,7 @@ class Sneakers {
     }
 
     randomPoint() {
-        return new Vector(
-            randomInt(0, this.size.x),
-            randomInt(0, this.size.y)
-        )
+        return new Vector(randomInt(0, this.size.x), randomInt(0, this.size.y));
     }
 
     putSneakerInBounds(sneaker: Sneaker) {
@@ -72,20 +61,20 @@ class Sneakers {
         const size = sneaker.getSize();
         let moved = false;
 
-        if ((size.x / 2) - x > 0) {
-            sneaker.getPos().x = this.size.x - (size.x / 2)
+        if (size.x / 2 - x > 0) {
+            sneaker.getPos().x = this.size.x - size.x / 2;
             moved = true;
         }
-        if ((size.x / 2) + x > this.size.x) {
-            sneaker.getPos().x = 0 + (size.x / 2)
+        if (size.x / 2 + x > this.size.x) {
+            sneaker.getPos().x = 0 + size.x / 2;
             moved = true;
         }
-        if ((size.y / 2) - y > 0) {
-            sneaker.getPos().y = this.size.y - (size.y / 2)
+        if (size.y / 2 - y > 0) {
+            sneaker.getPos().y = this.size.y - size.y / 2;
             moved = true;
         }
-        if ((size.y / 2) + y > this.size.y) {
-            sneaker.getPos().y = 0 + (size.y / 2)
+        if (size.y / 2 + y > this.size.y) {
+            sneaker.getPos().y = 0 + size.y / 2;
             moved = true;
         }
 
@@ -97,25 +86,23 @@ class Sneakers {
             if (this.putSneakerInBounds(sneaker)) {
                 sneaker.resetTrail();
             }
-            sneaker.update()
+            sneaker.update();
         });
     }
 
     draw(p5: any) {
         this.sneakers.forEach((sneaker: Sneaker) => sneaker.draw(p5));
     }
-
 }
 
 class Sneaker {
-
     private oldPos: Vector;
     private pos: Vector;
     private size: Vector;
     private speed: number;
     private trail: Vector[] = [];
     private trailLength: number;
-    private moveSteps: number = 0;
+    private moveSteps = 0;
 
     private lastMoved: number;
 
@@ -126,7 +113,6 @@ class Sneaker {
         this.trailLength = randomInt(5, 10);
         this.speed = randomInt(0, 2000);
         this.lastMoved = Date.now();
-
     }
 
     getPos() {
@@ -150,7 +136,7 @@ class Sneaker {
     resetTrail() {
         this.oldPos.set(this.pos);
         this.moveSteps = 0;
-        this.trail = []
+        this.trail = [];
     }
 
     trailCheck() {
@@ -166,43 +152,31 @@ class Sneaker {
     }
 
     draw(p5: any) {
-
         p5.stroke(100, 200, 100, 100);
         this.trail.forEach((point: Vector, index: number, trail: Vector[]) => {
+            const nextPoint = index + 1 === trail.length ? point : trail[index + 1];
 
-            const nextPoint = index + 1 === trail.length
-                ? point
-                : trail[index + 1]
-
-
-            p5.line(
-                point.x,
-                point.y,
-                nextPoint.x,
-                nextPoint.y
-            )
-        })
+            p5.line(point.x, point.y, nextPoint.x, nextPoint.y);
+        });
 
         p5.noStroke();
-        p5.fill(100, 200, 100, 60)
+        p5.fill(100, 200, 100, 60);
         p5.ellipse(this.pos.x, this.pos.y, this.size.x, this.size.y);
     }
-
 }
 
 class Vector {
-
     public x: number;
     public y: number;
 
-    constructor(x: number = 0, y: number = 0) {
+    constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
     }
 
     set(other: Vector) {
-        this.x = other.x
-        this.y = other.y
+        this.x = other.x;
+        this.y = other.y;
         return this;
     }
 

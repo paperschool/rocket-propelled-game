@@ -1,6 +1,6 @@
 // app
 
-export const isAppReady = (state: any) => isSocketConnected(state)
+export const isAppReady = (state: any) => isSocketConnected(state);
 
 export const isSocketConnected = (state: any) => state.user.isSocketConnected;
 
@@ -18,4 +18,3 @@ export const getRoomCodeValidated = (state: any) => state.room.validity;
 
 export const getNotifications = (state: any) => state.notifications;
 export const getNotificationCount = (state: any) => state.notifications.length;
-

@@ -1,10 +1,6 @@
-import {
-    DISCONNECT_CLIENT,
-    SPAM_WARN_CLIENT
-} from "../constants";
+import { DISCONNECT_CLIENT, SPAM_WARN_CLIENT } from '../constants';
 
 export default class Client {
-
     private ip: string;
     private deviceId: string;
     private socket: SocketIO.Socket;
@@ -12,7 +8,7 @@ export default class Client {
 
     constructor(deviceId: string, socket: any) {
         this.deviceId = deviceId;
-        this.socket = socket
+        this.socket = socket;
         this.ip = this.deriveIp();
     }
 
@@ -25,12 +21,11 @@ export default class Client {
     }
 
     deriveIp() {
-        return this.socket.request.connection.remoteAddress
+        return this.socket.request.connection.remoteAddress;
     }
 
-
     resetLastModified() {
-        this.lastModified = Date.now()
+        this.lastModified = Date.now();
     }
 
     relink(deviceId: string, socket: SocketIO.Socket) {
@@ -44,11 +39,11 @@ export default class Client {
     }
 
     spamWarn() {
-        this.resetLastModified()
+        this.resetLastModified();
         this.emit(SPAM_WARN_CLIENT);
     }
 
     emit(emitKey: string, emitValue?: any) {
-        this.socket.emit(emitKey, emitValue)
+        this.socket.emit(emitKey, emitValue);
     }
 }

@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useState, useReducer, Reducer, useEffect } from "react";
+import React, { FunctionComponent, useReducer, Reducer, useEffect } from 'react';
 import ContextDevTool from 'react-context-devtool';
-import idleTrackingMiddleware, { CHECK_IDLE } from "./idleContextMiddleware";
+import idleTrackingMiddleware, { CHECK_IDLE } from './idleContextMiddleware';
 
 type StoreProviderProps = {
     id: string;
@@ -11,7 +11,7 @@ type StoreProviderProps = {
     enableDevTool?: boolean;
     idleTracking?: boolean;
     idleTrackingTimeout?: number;
-}
+};
 
 export const StoreProvider: FunctionComponent<StoreProviderProps> = ({
     children,
@@ -22,36 +22,34 @@ export const StoreProvider: FunctionComponent<StoreProviderProps> = ({
     reducer,
     enableDevTool = true,
     idleTracking = false,
-    idleTrackingTimeout = 5000
+    idleTrackingTimeout = 5000,
 }) => {
-
     let modifiedReducer = reducer;
 
     if (idleTracking) {
-        modifiedReducer = idleTrackingMiddleware(reducer, idleTrackingTimeout, false, displayName)
+        modifiedReducer = idleTrackingMiddleware(reducer, idleTrackingTimeout, false, displayName);
     }
 
-    const [state, dispatch] = useReducer(modifiedReducer, initialState)
+    const [state, dispatch] = useReducer(modifiedReducer, initialState);
 
     useEffect(() => {
-        let idleCheckInterval = setInterval(() => {
-            dispatch({ type: CHECK_IDLE })
+        const idleCheckInterval = setInterval(() => {
+            dispatch({ type: CHECK_IDLE });
         }, 1000);
 
         return () => {
-            clearInterval(idleCheckInterval)
-        }
-    }, [])
+            clearInterval(idleCheckInterval);
+        };
+    }, []);
 
     Store.displayName = displayName;
 
-    return (<Store.Provider value={{ state, dispatch }}>
-        {enableDevTool ? <ContextDevTool
-            context={Store}
-            id={id}
-            displayName={displayName} /> : null}
-        {children}
-    </Store.Provider>);
-}
+    return (
+        <Store.Provider value={{ state, dispatch }}>
+            {enableDevTool ? <ContextDevTool context={Store} id={id} displayName={displayName} /> : null}
+            {children}
+        </Store.Provider>
+    );
+};
 
 export default StoreProvider;

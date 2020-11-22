@@ -1,21 +1,21 @@
-const debounce = (callback: Function, timeout: number = 1000) => {
+// eslint-disable-next-line
+const debounce = (callback: Function, timeout = 1000) => {
     let debounceTimeout: NodeJS.Timeout;
 
     return () => {
-
         const later = () => {
-            console.log("Calling Later...")
+            console.log('Calling Later...');
             debounceTimeout = null;
-            callback.apply(this)
-        }
+            callback.apply(this);
+        };
 
-        clearTimeout(debounceTimeout)
+        clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(() => {
-            console.log("Calling Later...")
+            console.log('Calling Later...');
 
-            later()
+            later();
         }, timeout);
-    }
-}
+    };
+};
 
-export default debounce
+export default debounce;
