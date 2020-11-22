@@ -17,7 +17,7 @@
     "build:server:dev": "webpack --mode=development --config ./build/server/webpack.config.js",
     "build:client:prod": "webpack --mode=production --config ./build/client/webpack.config.js",
     "build:client:dev": "webpack --mode=development --config ./build/client/webpack.config.js",
-    "docker:build": "docker build -t spotifriends-app ."
+    "docker:build": "docker build -t rocket-propelled-game-app ."
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",

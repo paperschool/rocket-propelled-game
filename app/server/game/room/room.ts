@@ -1,30 +1,27 @@
-import ClientCollection from "./ClientCollection";
+import ClientCollection from './ClientCollection';
 
-import {
-    REFRESH_DATA,
-} from "../constants";
-import Client from "./Client";
-import Game from "../Game";
+import { REFRESH_DATA } from '../constants';
+import Client from './Client';
+import Game from '../Game';
 
 type RoomSelfDestructCallbackFn = (roomId: string) => void;
 
 export default class Room {
-
     private id: string;
     private admin: string;
     private clients: ClientCollection;
     private game: Game;
 
-    private minimumClients: number = 1;
+    private minimumClients = 1;
 
     private selfDestructCallbackFn: RoomSelfDestructCallbackFn;
     private selfDestructTimeout: NodeJS.Timeout;
-    private selfDestructTTL: number = 30000; // ms
+    private selfDestructTTL = 30000; // ms
 
     constructor(id: string, selfDestructCallbackFn: RoomSelfDestructCallbackFn, adminDeviceId: string) {
         this.id = id;
         this.selfDestructCallbackFn = selfDestructCallbackFn;
-        this.clients = new ClientCollection()
+        this.clients = new ClientCollection();
         this.admin = adminDeviceId;
         this.game = new Game();
 
@@ -53,8 +50,8 @@ export default class Room {
 
         // TODO - coupling room / game / player
         this.game.players.addPlayer(deviceId);
-        this.cleanUp()
-        this.broadcastPayload()
+        this.cleanUp();
+        this.broadcastPayload();
     }
 
     detatchClient(deviceId: string) {
@@ -71,10 +68,10 @@ export default class Room {
     cleanUp() {
         if (this.clients.getClientCount() < this.minimumClients && this.game.started) {
             this.scheduleSelfDestruct();
-        } else if (this.clients.getClientCount() == 0){
+        } else if (this.clients.getClientCount() == 0) {
             this.scheduleSelfDestruct();
         } else {
-            this.descheduleSelfDestruct()
+            this.descheduleSelfDestruct();
         }
     }
 
@@ -91,11 +88,11 @@ export default class Room {
     }
 
     createPayload() {
-        return { game: this.game.serialise() }
+        return { game: this.game.serialise() };
     }
 
     broadcast(emitKey: string, emitValue: any) {
-        this.clients.broadcast(emitKey, emitValue)
+        this.clients.broadcast(emitKey, emitValue);
     }
 
     broadcastPayload() {
