@@ -1,8 +1,6 @@
 import ClientCollection from './ClientCollection';
-
 import { REFRESH_DATA } from '../constants';
-import Client from './Client';
-import Game from '../Game';
+import Game from '../Game/Game';
 
 type RoomSelfDestructCallbackFn = (roomId: string) => void;
 
