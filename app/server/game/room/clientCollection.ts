@@ -1,4 +1,4 @@
-import Client from "./client";
+import Client from "./Client";
 
 export default class ClientCollection {
     private clients: Client[];

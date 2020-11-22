@@ -1,9 +1,9 @@
-import ClientCollection from "./clientCollection";
+import ClientCollection from "./ClientCollection";
 
 import {
     REFRESH_DATA,
 } from "../constants";
-import Client from "./client";
+import Client from "./Client";
 import Game from "../Game";
 
 type RoomSelfDestructCallbackFn = (roomId: string) => void;
@@ -50,6 +50,9 @@ export default class Room {
     addClient(deviceId: string, socket: SocketIO.Socket) {
         console.server(`Client added to ${this.id}!`);
         this.getClients().addClient(deviceId, socket);
+
+        // TODO - coupling room / game / player
+        this.game.players.addPlayer(deviceId);
         this.cleanUp()
         this.broadcastPayload()
     }
@@ -57,6 +60,9 @@ export default class Room {
     detatchClient(deviceId: string) {
         console.server(`Detching Client from ${this.id}!`);
         this.getClients().detatchClient(deviceId);
+
+        // TODO - coupling room / game / player
+        this.game.players.removePlayer(deviceId);
         this.broadcastPayload();
         // need to add admin clean up / migration
         this.cleanUp();

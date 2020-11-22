@@ -1,7 +1,7 @@
 import Socket, { Server } from "socket.io";
 
-import State from "./room/state";
-import { validateMessage, Message } from "./message";
+import State from "./Room/State";
+import { validateMessage, Message } from "./Message";
 
 import { CONNECT_CLIENT, DISCONNECT_CLIENT } from "./constants";
 

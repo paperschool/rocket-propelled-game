@@ -2,7 +2,7 @@ import {
     ROOM_INVALID,
     ROOM_VALID
 } from "../constants";
-import Room from "./room";
+import Room from "./Room";
 
 export default class RoomCollection {
 

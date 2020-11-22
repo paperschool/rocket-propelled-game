@@ -1,4 +1,4 @@
-import { Message } from "../../../../server/game/message";
+import { Message } from "../../../../server/game/Message";
 
 const constructValidMessage = (deviceId: string, roomCode: string, payload: any): Message => ({
     deviceId,

@@ -6,7 +6,7 @@ import express from "express";
 import path from "path";
 import frontend from "./frontend";
 import middlewares from "./middlewares";
-import spotifriends from "./game"
+import SocketServer from "./game/SocketServer"
 
 const expressApp = express();
 const PORT: number = 3000;
@@ -19,7 +19,7 @@ expressApp.use(express.static(assetPath));
 expressApp.use(frontend);
 
 const httpServer = http.createServer(expressApp);
-spotifriends(httpServer);
+SocketServer(httpServer);
 
 httpServer.listen(PORT, () => console.server(`Server Listening on Port ${PORT}`));
 

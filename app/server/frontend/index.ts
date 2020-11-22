@@ -4,7 +4,7 @@ import {
     CREATE_ROOM_ROUTE,
     VALIDATE_ROOM_ROUTE
 } from "./constants";
-import { createRoom, validateRoom } from "../game"
+import { createRoom, validateRoom } from "../game/SocketServer"
 
 const router = express.Router();
 
