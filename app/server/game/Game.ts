@@ -10,7 +10,7 @@ class Game {
     constructor(){
         this.map = new Map(new Vector(10,10));
         this.map.generate()
-        this.map.populate()
+        this.map.populateTiles()
 
         this.players = new Players()
     }

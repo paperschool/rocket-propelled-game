@@ -30,7 +30,7 @@ class Map {
     }
 
     // random generator for map layout
-    populate(): void {
+    populateTiles(): void {
 
         this.coordinates = this.coordinates.map(col => {
             return col.map(row => {
@@ -45,11 +45,8 @@ class Map {
                 }
 
                 return row;
-
-
             })
         })
-
     }
 
     serialise(): any {

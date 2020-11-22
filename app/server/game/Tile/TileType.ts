@@ -4,7 +4,8 @@ enum TileType {
     Hostile = "Hostile",
     Refuel = "Refuel",
     Warp = "Warp",
-    Goal = "Goal"
+    Goal = "Goal",
+    Start = "Start"
 }
 
 export default TileType;
