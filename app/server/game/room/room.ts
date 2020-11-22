@@ -15,7 +15,7 @@ export default class Room {
     private clients: ClientCollection;
     private game: Game;
 
-    private minimumClients: number = 2;
+    private minimumClients: number = 1;
 
     private selfDestructCallbackFn: RoomSelfDestructCallbackFn;
     private selfDestructTimeout: NodeJS.Timeout;
