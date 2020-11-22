@@ -1,4 +1,5 @@
-export default (title: string,
+export default (
+    title: string,
     styles: string,
     externalScripts: string,
     scripts: string,
@@ -20,4 +21,4 @@ export default (title: string,
     ${scripts}
 </body> 
 </html>
-`
+`;

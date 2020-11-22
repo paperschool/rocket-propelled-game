@@ -1,4 +1,4 @@
-import Client from "./Client";
+import Client from './Client';
 
 export default class ClientCollection {
     private clients: Client[];
@@ -16,7 +16,7 @@ export default class ClientCollection {
     }
 
     getClientByDeviceId(deviceId: string) {
-        return this.getClients().find((client: Client) => client.getDeviceId() === deviceId)
+        return this.getClients().find((client: Client) => client.getDeviceId() === deviceId);
     }
 
     getClientCount() {
@@ -26,13 +26,13 @@ export default class ClientCollection {
     addClient(deviceId: string, socket: SocketIO.Socket) {
         // check if client already exists
         if (!this.clientExists(deviceId)) {
-            const newClient = new Client(deviceId, socket)
+            const newClient = new Client(deviceId, socket);
 
             this.clients.push(newClient);
         } else {
             const client = this.getClientByDeviceId(deviceId);
-            console.server("Disconnecting Old Client...")
-            client.disconnect()
+            console.server('Disconnecting Old Client...');
+            client.disconnect();
             client.relink(deviceId, socket);
         }
     }
@@ -40,15 +40,15 @@ export default class ClientCollection {
     detatchClient(deviceId: string) {
         if (this.clientExists(deviceId)) {
             console.server(`Detching Client ${deviceId}...`);
-            this.getClientByDeviceId(deviceId).disconnect()
-            this.setClients(this.getClients().filter((client: Client) => client.getDeviceId() !== deviceId))
+            this.getClientByDeviceId(deviceId).disconnect();
+            this.setClients(this.getClients().filter((client: Client) => client.getDeviceId() !== deviceId));
         } else {
             console.server(`Could Not Detatch Unknown Client ${deviceId}...`);
         }
     }
 
-    detachAllClients(){
-        this.getClients().forEach(client => this.detatchClient(client.getDeviceId()))
+    detachAllClients() {
+        this.getClients().forEach((client) => this.detatchClient(client.getDeviceId()));
     }
 
     clientExists(deviceId: string) {
@@ -59,4 +59,3 @@ export default class ClientCollection {
         this.clients.forEach((client: Client) => client.emit(emitKey, emitValue));
     }
 }
-

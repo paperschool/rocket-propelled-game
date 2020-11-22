@@ -1,10 +1,10 @@
-import { Message } from "../../../../server/game/Message";
+import { Message } from '../../../../server/game/Message';
 
 const constructValidMessage = (deviceId: string, roomCode: string, payload: any): Message => ({
     deviceId,
     roomCode,
     timeSent: Date.now(),
-    payload
-})
+    payload,
+});
 
 export default constructValidMessage;

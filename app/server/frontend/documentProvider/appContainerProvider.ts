@@ -1,1 +1,1 @@
-export default (): string => "react-app-container" 
+export default (): string => 'react-app-container';

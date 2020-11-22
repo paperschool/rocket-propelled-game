@@ -1,19 +1,18 @@
 export class ComparativeError extends Error {
-
     isOfName: (errorName: string) => boolean;
     isOfType: (errorName: ErrorConstructor) => boolean;
 
     constructor(message?: string) {
         super(message); // 'Error' breaks prototype chain here
-        this.name = "Comparative Error";
+        this.name = 'Comparative Error';
 
         this.isOfName = (errorName: string) => {
             return errorName === this.name;
-        }
+        };
 
         this.isOfType = (error: ErrorConstructor) => {
             return this instanceof error;
-        }
+        };
 
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
@@ -22,7 +21,7 @@ export class ComparativeError extends Error {
 export class NotFoundError extends ComparativeError {
     constructor(message?: string) {
         super(message); // 'Error' breaks prototype chain here
-        this.name = "Not Found Error";
+        this.name = 'Not Found Error';
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
 }
@@ -30,7 +29,7 @@ export class NotFoundError extends ComparativeError {
 export class ServerError extends ComparativeError {
     constructor(message?: string) {
         super(message); // 'Error' breaks prototype chain here
-        this.name = "Server Error";
+        this.name = 'Server Error';
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
 }
@@ -38,7 +37,7 @@ export class ServerError extends ComparativeError {
 export class TimeoutError extends ComparativeError {
     constructor(message?: string) {
         super(message); // 'Error' breaks prototype chain here
-        this.name = "Timeout Error";
+        this.name = 'Timeout Error';
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
 }
@@ -46,7 +45,7 @@ export class TimeoutError extends ComparativeError {
 export class UnauthorisedError extends ComparativeError {
     constructor(message?: string) {
         super(message); // 'Error' breaks prototype chain here
-        this.name = "Unauthorised Error";
+        this.name = 'Unauthorised Error';
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
 }

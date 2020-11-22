@@ -1,6 +1,6 @@
-import { Express } from "express";
-import jsonBodyParser from "./JsonBodyParser";
+import { Express } from 'express';
+import jsonBodyParser from './JsonBodyParser';
 
 export default (app: Express) => {
-    [jsonBodyParser].map(middlware => app.use(middlware));
-}
+    [jsonBodyParser].map((middlware) => app.use(middlware));
+};

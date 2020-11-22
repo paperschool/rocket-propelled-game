@@ -1,14 +1,9 @@
-import React, { FunctionComponent, useContext, useState, useEffect } from "react";
-import io from "socket.io-client";
-import constructValidMessage from "./constructValidMessage";
+import React, { FunctionComponent, useContext, useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import constructValidMessage from './constructValidMessage';
 
-import gameStore from "../../../state/GameStore/store";
-import {
-    getDeviceId,
-    getRoomCode,
-    isSocketConnected
-} from "../../../state/GameStore/selectors";
-
+import gameStore from '../../../state/GameStore/store';
+import { getDeviceId, getRoomCode, isSocketConnected } from '../../../state/GameStore/selectors';
 
 import {
     REFRESH_DATA,
@@ -17,12 +12,11 @@ import {
     CONNECT_CLIENT,
     DISCONNECT_CLIENT,
     // DETATCH_CLIENT,
-    SPAM_WARN_CLIENT
-} from "../../../../server/game/constants";
-import { resetState, setSocketConnected } from "../../../state/GameStore/actions";
+    // SPAM_WARN_CLIENT,
+} from '../../../../server/game/constants';
+import { resetState, setSocketConnected } from '../../../state/GameStore/actions';
 
 const SocketClient: FunctionComponent = () => {
-
     const { state, dispatch } = useContext(gameStore);
 
     const [clientReadyToSetup, setClientReadyToSetup] = useState(false);
@@ -38,10 +32,9 @@ const SocketClient: FunctionComponent = () => {
                 setIsBadRoom(true);
             }
         }
-    }, [getDeviceId(state), getRoomCode(state)])
+    }, [getDeviceId(state), getRoomCode(state)]);
 
     useEffect(() => {
-
         const newSocket = io.connect();
 
         // newSocket.on(DISCONNECT_CLIENT, () => {
@@ -50,55 +43,50 @@ const SocketClient: FunctionComponent = () => {
         // })
 
         newSocket.on(ROOM_INVALID, () => {
-            setIsBadRoom(true)
-        })
+            setIsBadRoom(true);
+        });
 
         newSocket.on(ROOM_VALID, () => {
-            setIsBadRoom(false)
+            setIsBadRoom(false);
             setSocketConnected(dispatch);
-        })
+        });
 
-        newSocket.on(REFRESH_DATA, (refreshData: any) => setRefreshData(refreshData))
+        newSocket.on(REFRESH_DATA, (refreshData: any) => setRefreshData(refreshData));
 
         // newSocket.on(SPAM_WARN_CLIENT, (error: any) => {
         //     console.log("Spam Warn Called");
         // })
 
-        newSocket.emit(CONNECT_CLIENT,
-            constructValidMessage(getDeviceId(state), getRoomCode(state), {})
-        );
+        newSocket.emit(CONNECT_CLIENT, constructValidMessage(getDeviceId(state), getRoomCode(state), {}));
 
         setSocket(newSocket);
-
-    }, [clientReadyToSetup])
+    }, [clientReadyToSetup]);
 
     useEffect(() => {
         return () => {
             if (isSocketConnected(state)) {
-                socket.emit(DISCONNECT_CLIENT,
-                    constructValidMessage(getDeviceId(state), getRoomCode(state), {})
-                );
+                socket.emit(DISCONNECT_CLIENT, constructValidMessage(getDeviceId(state), getRoomCode(state), {}));
             }
-        }
-    }, [isSocketConnected(state)])
+        };
+    }, [isSocketConnected(state)]);
 
     useEffect(() => {
-        if (typeof isBadRoom !== "undefined") {
+        if (typeof isBadRoom !== 'undefined') {
             if (isBadRoom) {
-                resetState(dispatch)
-                window.location.href = "/"
+                resetState(dispatch);
+                window.location.href = '/';
             }
         }
-    }, [isBadRoom])
+    }, [isBadRoom]);
 
     useEffect(() => {
         if (refreshData) {
-            console.log(refreshData)
+            console.log(refreshData);
             // storeData(dispatch, refreshData);
         }
-    }, [refreshData])
+    }, [refreshData]);
 
-    return (<></>)
-}
+    return <></>;
+};
 
 export default SocketClient;
