@@ -1,4 +1,4 @@
-import Client from "./client";
+import Client from "./Client";
 
 export default class ClientCollection {
     private clients: Client[];
@@ -45,6 +45,10 @@ export default class ClientCollection {
         } else {
             console.server(`Could Not Detatch Unknown Client ${deviceId}...`);
         }
+    }
+
+    detachAllClients(){
+        this.getClients().forEach(client => this.detatchClient(client.getDeviceId()))
     }
 
     clientExists(deviceId: string) {

@@ -1,4 +1,4 @@
-import RoomCollection from "./roomCollection";
+import RoomCollection from "./RoomCollection";
 
 class State {
     private rooms: RoomCollection;

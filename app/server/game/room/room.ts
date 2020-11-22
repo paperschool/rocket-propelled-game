@@ -1,27 +1,29 @@
-import ClientCollection from "./clientCollection";
+import ClientCollection from './ClientCollection';
 
-import {
-    REFRESH_DATA,
-} from "../constants";
-import Client from "./client";
+import { REFRESH_DATA } from '../constants';
+import Client from './Client';
+import Game from '../Game';
 
 type RoomSelfDestructCallbackFn = (roomId: string) => void;
 
 export default class Room {
-
     private id: string;
     private admin: string;
     private clients: ClientCollection;
+    private game: Game;
+
+    private minimumClients = 1;
 
     private selfDestructCallbackFn: RoomSelfDestructCallbackFn;
     private selfDestructTimeout: NodeJS.Timeout;
-    private selfDestructTTL: number = 30000; // ms
+    private selfDestructTTL = 30000; // ms
 
     constructor(id: string, selfDestructCallbackFn: RoomSelfDestructCallbackFn, adminDeviceId: string) {
         this.id = id;
         this.selfDestructCallbackFn = selfDestructCallbackFn;
-        this.clients = new ClientCollection()
+        this.clients = new ClientCollection();
         this.admin = adminDeviceId;
+        this.game = new Game();
 
         this.cleanUp();
     }
@@ -45,23 +47,31 @@ export default class Room {
     addClient(deviceId: string, socket: SocketIO.Socket) {
         console.server(`Client added to ${this.id}!`);
         this.getClients().addClient(deviceId, socket);
-        this.cleanUp()
-        this.broadcastPayload()
+
+        // TODO - coupling room / game / player
+        this.game.players.addPlayer(deviceId);
+        this.cleanUp();
+        this.broadcastPayload();
     }
 
     detatchClient(deviceId: string) {
         console.server(`Detching Client from ${this.id}!`);
         this.getClients().detatchClient(deviceId);
+
+        // TODO - coupling room / game / player
+        this.game.players.removePlayer(deviceId);
         this.broadcastPayload();
         // need to add admin clean up / migration
         this.cleanUp();
     }
 
     cleanUp() {
-        if (this.clients.getClientCount() <= 0) {
+        if (this.clients.getClientCount() < this.minimumClients && this.game.started) {
+            this.scheduleSelfDestruct();
+        } else if (this.clients.getClientCount() == 0) {
             this.scheduleSelfDestruct();
         } else {
-            this.descheduleSelfDestruct()
+            this.descheduleSelfDestruct();
         }
     }
 
@@ -70,18 +80,19 @@ export default class Room {
     }
 
     scheduleSelfDestruct() {
-        this.descheduleSelfDestruct()
+        this.descheduleSelfDestruct();
         this.selfDestructTimeout = setTimeout(() => {
+            this.getClients().detachAllClients();
             this.selfDestructCallbackFn(this.getId());
         }, this.getSelfDestructTTL());
     }
 
     createPayload() {
-        return { foo: "test payload" }
+        return { game: this.game.serialise() };
     }
 
     broadcast(emitKey: string, emitValue: any) {
-        this.clients.broadcast(emitKey, emitValue)
+        this.clients.broadcast(emitKey, emitValue);
     }
 
     broadcastPayload() {
