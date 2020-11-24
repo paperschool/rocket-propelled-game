@@ -14,6 +14,11 @@ export const getRoomCode = (state: any) => state.room.id;
 export const getRoomCodeValidity = (state: any) => state.room.valid;
 export const getRoomCodeValidated = (state: any) => state.room.validity;
 
+// player
+
+export const getPlayer = (state: any) => state.player;
+export const getPlayerReady = (state: any) => getPlayer(state).isReady;
+
 // error
 
 export const getNotifications = (state: any) => state.notifications;

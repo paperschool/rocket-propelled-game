@@ -10,6 +10,9 @@ export default async (): Promise<any> => {
             validated: false,
         },
         controller: {},
+        player: {
+            isReady: false,
+        },
         errors: {
             player: false,
             userPremium: false,

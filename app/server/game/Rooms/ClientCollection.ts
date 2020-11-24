@@ -23,18 +23,22 @@ export default class ClientCollection {
         return this.getClients().length;
     }
 
-    addClient(deviceId: string, socket: SocketIO.Socket) {
+    addClient(deviceId: string, socket: SocketIO.Socket): Client {
+        let client: Client;
+
         // check if client already exists
         if (!this.clientExists(deviceId)) {
-            const newClient = new Client(deviceId, socket);
+            client = new Client(deviceId, socket);
 
-            this.clients.push(newClient);
+            this.clients.push(client);
         } else {
-            const client = this.getClientByDeviceId(deviceId);
+            client = this.getClientByDeviceId(deviceId);
             console.server('Disconnecting Old Client...');
             client.disconnect();
             client.relink(deviceId, socket);
         }
+
+        return client;
     }
 
     detatchClient(deviceId: string) {

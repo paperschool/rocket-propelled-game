@@ -4,6 +4,7 @@ import {
     SET_ROOM_CODE_VALIDITY,
     // STORE_DATA,
     SET_SOCKET_CONNECTED,
+    SET_PLAYER_READINESS,
     RESET_STATE,
     LEAVE_ROOM,
 } from './constants';
@@ -29,6 +30,13 @@ export const setSocketConnected = (dispatch: any) => {
 export const leaveRoom = (dispatch: any) => {
     dispatch({ type: LEAVE_ROOM });
 };
+
+// player stuff
+
+export const setPlayerReady = (dispatch: any, playerReadiness: boolean) => {
+    dispatch({ type: SET_PLAYER_READINESS, payload: playerReadiness });
+};
+
 // errors
 
 // state reset

@@ -3,6 +3,11 @@ import Vector from '../Vector';
 import ShipStats from './ShipStats';
 
 class Ship {
+    // device id of the player
+    id: string;
+
+    ready = false;
+
     // tile position
     position: Vector;
 
@@ -23,10 +28,15 @@ class Ship {
     // power / ability of the rocket company
     corporation: ShipStats = ShipStats.Medium;
 
-    constructor(startPosition: Vector, mapSize: Vector) {
+    constructor(id: string, startPosition: Vector, mapSize: Vector) {
+        this.id = id;
         this.position = startPosition;
 
         const map = new Map(mapSize);
+    }
+
+    isReady() {
+        return this.ready;
     }
 }
 

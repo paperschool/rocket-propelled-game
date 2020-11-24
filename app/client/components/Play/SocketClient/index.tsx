@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import constructValidMessage from './constructValidMessage';
 
 import gameStore from '../../../state/GameStore/store';
-import { getDeviceId, getRoomCode, isSocketConnected } from '../../../state/GameStore/selectors';
+import { getDeviceId, getPlayerReady, getRoomCode, isSocketConnected } from '../../../state/GameStore/selectors';
 
 import {
     REFRESH_DATA,
@@ -11,6 +11,7 @@ import {
     ROOM_VALID,
     CONNECT_CLIENT,
     DISCONNECT_CLIENT,
+    CLIENT_GAME_STATE_READY,
     // DETATCH_CLIENT,
     // SPAM_WARN_CLIENT,
 } from '../../../../server/game/constants';
@@ -78,6 +79,12 @@ const SocketClient: FunctionComponent = () => {
             }
         }
     }, [isBadRoom]);
+
+    useEffect(() => {
+        if (getPlayerReady(state)) {
+            socket.emit(CLIENT_GAME_STATE_READY, constructValidMessage(getDeviceId(state), getRoomCode(state), {}));
+        }
+    }, [getPlayerReady(state)]);
 
     useEffect(() => {
         if (refreshData) {

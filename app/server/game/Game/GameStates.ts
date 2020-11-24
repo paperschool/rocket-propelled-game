@@ -1,9 +1,10 @@
 enum GameStates {
-    Default,
     Initial,
     Start,
+    Ready,
     Setup,
     Play,
+    Pause, // unlikely to implement
     GameOver,
 }
 

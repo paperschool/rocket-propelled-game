@@ -4,6 +4,7 @@ import SocketClient from './SocketClient';
 import PageTemplate from '../PageTemplate';
 import Canvas from '../Canvas';
 import Dashboard from './Dashboard';
+import ReadyButton from './ReadyButton';
 
 import gameStore from '../../state/GameStore/store';
 import { resetState } from '../../state/GameStore/actions';
@@ -22,6 +23,7 @@ const Play: FunctionComponent = () => {
         <PageTemplate>
             <SocketClient />
             <Canvas />
+            <ReadyButton />
             <div className={controlContainer}>
                 <Dashboard />
             </div>

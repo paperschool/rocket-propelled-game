@@ -8,6 +8,7 @@ import {
     SET_ROOM_CODE,
     SET_ROOM_CODE_VALIDITY,
     LEAVE_ROOM,
+    SET_PLAYER_READINESS,
     // SET_NOTIFICATION,
     // REMOVE_NOTIFICATION
 } from './constants';
@@ -47,6 +48,15 @@ const GameStoreReducer: Reducer<any, any> = (state: any, { type, payload }: any)
                     validated: true,
                 },
             };
+        case SET_PLAYER_READINESS: {
+            return {
+                ...state,
+                player: {
+                    ...state.player,
+                    isReady: payload,
+                },
+            };
+        }
         case STORE_DATA:
             return {
                 ...state,

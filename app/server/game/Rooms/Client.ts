@@ -1,16 +1,47 @@
-import { DISCONNECT_CLIENT, SPAM_WARN_CLIENT } from '../constants';
+import { CLIENT_GAME_STATE_READY, DISCONNECT_CLIENT, SPAM_WARN_CLIENT } from '../constants';
+import Game from '../Game/Game';
+import { Message } from '../Message';
+import SocketEventHelper from '../SocketEventHelper';
 
 export default class Client {
     private ip: string;
     private deviceId: string;
     private socket: SocketIO.Socket;
     private lastModified: number;
+    private game: Game;
 
     constructor(deviceId: string, socket: any) {
         this.deviceId = deviceId;
         this.socket = socket;
         this.ip = this.deriveIp();
+
+        this.setupListeners();
     }
+
+    // game interaction specific methods
+    setGame(game: Game): void {
+        this.game = game;
+    }
+
+    joinGame(): void {
+        if (this.game) {
+            this.game.addPlayer(this.deviceId);
+        }
+    }
+
+    leaveGame(): void {
+        if (this.game) {
+            this.game.removePlayer(this.deviceId);
+        }
+    }
+
+    setupListeners() {
+        SocketEventHelper(this.socket, CLIENT_GAME_STATE_READY, true, ({ deviceId }: Message) => {
+            this.game.readyPlayer(deviceId);
+        });
+    }
+
+    // connection specific methods
 
     getIp() {
         return this.ip;
@@ -35,6 +66,8 @@ export default class Client {
     }
 
     disconnect() {
+        this.leaveGame();
+
         this.emit(DISCONNECT_CLIENT);
     }
 

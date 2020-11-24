@@ -10,8 +10,6 @@ export default class Room {
     private clients: ClientCollection;
     private game: Game;
 
-    private minimumClients = 1;
-
     private selfDestructCallbackFn: RoomSelfDestructCallbackFn;
     private selfDestructTimeout: NodeJS.Timeout;
     private selfDestructTTL = 30000; // ms
@@ -44,10 +42,12 @@ export default class Room {
 
     addClient(deviceId: string, socket: SocketIO.Socket) {
         console.server(`Client added to ${this.id}!`);
-        this.getClients().addClient(deviceId, socket);
 
-        // TODO - coupling room / game / player
-        this.game.players.addPlayer(deviceId);
+        const client = this.getClients().addClient(deviceId, socket);
+
+        client.setGame(this.game);
+        client.joinGame();
+
         this.cleanUp();
         this.broadcastPayload();
     }
@@ -56,15 +56,12 @@ export default class Room {
         console.server(`Detching Client from ${this.id}!`);
         this.getClients().detatchClient(deviceId);
 
-        // TODO - coupling room / game / player
-        this.game.players.removePlayer(deviceId);
         this.broadcastPayload();
-        // need to add admin clean up / migration
         this.cleanUp();
     }
 
     cleanUp() {
-        if (this.clients.getClientCount() < this.minimumClients && this.game.started) {
+        if (this.game.canEnd()) {
             this.scheduleSelfDestruct();
         } else if (this.clients.getClientCount() == 0) {
             this.scheduleSelfDestruct();
@@ -79,6 +76,7 @@ export default class Room {
 
     scheduleSelfDestruct() {
         this.descheduleSelfDestruct();
+        console.server(`Scheduled Destruction of Room ${this.id}`);
         this.selfDestructTimeout = setTimeout(() => {
             this.getClients().detachAllClients();
             this.selfDestructCallbackFn(this.getId());
