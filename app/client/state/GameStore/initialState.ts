@@ -13,6 +13,7 @@ export default async (): Promise<any> => {
         player: {
             isReady: false,
         },
+        serverData: {},
         errors: {
             player: false,
             userPremium: false,

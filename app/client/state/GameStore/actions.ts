@@ -7,6 +7,7 @@ import {
     SET_PLAYER_READINESS,
     RESET_STATE,
     LEAVE_ROOM,
+    SET_SERVER_GAME_DATA,
 } from './constants';
 
 export const setDeviceId = (dispatch: any, deviceId: string) => {
@@ -42,4 +43,9 @@ export const setPlayerReady = (dispatch: any, playerReadiness: boolean) => {
 // state reset
 export const resetState = (dispatch: any) => {
     dispatch({ type: RESET_STATE });
+};
+
+// game
+export const setServerGameData = (dispatch: any, map: Array<any>) => {
+    dispatch({ type: SET_SERVER_GAME_DATA, payload: map });
 };

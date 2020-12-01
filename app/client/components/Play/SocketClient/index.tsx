@@ -15,7 +15,7 @@ import {
     // DETATCH_CLIENT,
     // SPAM_WARN_CLIENT,
 } from '../../../../server/game/constants';
-import { resetState, setSocketConnected } from '../../../state/GameStore/actions';
+import { resetState, setServerGameData, setSocketConnected } from '../../../state/GameStore/actions';
 
 const SocketClient: FunctionComponent = () => {
     const { state, dispatch } = useContext(gameStore);
@@ -88,8 +88,8 @@ const SocketClient: FunctionComponent = () => {
 
     useEffect(() => {
         if (refreshData) {
-            console.log(refreshData);
-            // storeData(dispatch, refreshData);
+            console.log('input', refreshData);
+            setServerGameData(dispatch, refreshData);
         }
     }, [refreshData]);
 

@@ -9,6 +9,7 @@ import {
     SET_ROOM_CODE_VALIDITY,
     LEAVE_ROOM,
     SET_PLAYER_READINESS,
+    SET_SERVER_GAME_DATA,
     // SET_NOTIFICATION,
     // REMOVE_NOTIFICATION
 } from './constants';
@@ -82,7 +83,13 @@ const GameStoreReducer: Reducer<any, any> = (state: any, { type, payload }: any)
                     ...state.errors,
                 },
             };
-
+        case SET_SERVER_GAME_DATA:
+            return {
+                ...state,
+                serverData: {
+                    ...payload,
+                },
+            };
         default:
             return state;
     }

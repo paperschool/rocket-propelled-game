@@ -23,3 +23,7 @@ export const getPlayerReady = (state: any) => getPlayer(state).isReady;
 
 export const getNotifications = (state: any) => state.notifications;
 export const getNotificationCount = (state: any) => state.notifications.length;
+
+// game
+
+export const getMap = (state: any) => state.serverData.game?.map;

@@ -8,7 +8,7 @@ import WarpTile from './Tile/WarpTile';
 
 class Map {
     // schema is [x][y]
-    private coordinates: Tile[][] = [[]];
+    private coordinates: Tile[][] = [];
     private size: Vector;
 
     private hostileTileLikelihood = 10;

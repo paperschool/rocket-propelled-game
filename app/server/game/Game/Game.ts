@@ -65,7 +65,9 @@ class Game {
     }
 
     serialise() {
-        return this.map.serialise();
+        return {
+            map: this.map.serialise(),
+        };
     }
 
     serialiseForPlayer(deviceId: string) {}
